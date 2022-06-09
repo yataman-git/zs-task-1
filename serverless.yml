@@ -1,0 +1,27 @@
+org: yataman
+app: zs-task-1
+service: zs-task-1
+frameworkVersion: '3'
+
+plugins:
+  - serverless-iam-roles-per-function
+
+provider:
+  name: aws
+  runtime: python3.8
+
+functions:
+  hello:
+    handler: handler.hello
+    iamRoleStatementsName: zs-task-1-dev-us-east-1
+    iamRoleStatements:
+      - Effect: "Allow" 
+        Action:
+          - cloudformation:*
+          - ec2:*
+        Resource:
+          - "*" 
+    events:
+      - httpApi:
+          path: /
+          method: get
